@@ -11,6 +11,7 @@
 <body>
 <div class="container">
     <h1>SANTAROSO-PROJECT 2026</h1>
+    <p><a href="https://github.com/mohamedsaleh077/santaroso" target="_blank">GitHub</a></p>
     <p>Lightweight Image Board, not useful and just a dump place to post dump things anonymously lmao</p>
     <h3>RULES, YOU MUST FOLLOW IT OR I WILL KICK YOUR IP LMAO</h3>
     <ul>
