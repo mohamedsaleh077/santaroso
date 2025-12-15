@@ -79,6 +79,7 @@
             t.media,
             t.created_at,
             b.name AS board_name,
+            b.id AS board_id,
             COUNT(c.id) AS comment_count
         FROM 
             threads t
@@ -106,11 +107,12 @@
 
         foreach ($result as $thread) {
             $body = substr($thread['body'],0, 100);
+            $board_link = '<a href="/board.php?board_id' .  htmlspecialchars($thread['board_id']) . '" target="_blank">' .  htmlspecialchars($thread['board_name']) . '</a>';
             echo '<a href="/thread.php?id=' . htmlspecialchars($thread['id']) . '" class="text-reset text-decoration-none">';
             echo '<div class="card m-2 hover-shadow custom-card">';
             echo makeHTMLmedia(htmlspecialchars($thread['media']));
             echo '<div class="card-body">';
-            echo '<h5 class="card-title">' . htmlspecialchars($thread['user_name']) . 'on ' . htmlspecialchars($thread['board_name']) . 'board</h5>';
+            echo '<h5 class="card-title">' . htmlspecialchars($thread['user_name']) . ' on ' . $board_link . ' board</h5>';
             echo '<p class="card-text">' . htmlspecialchars($body) . '</p>';
             echo '</div>';
             echo '<div class="card-footer">';
