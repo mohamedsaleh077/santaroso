@@ -1,0 +1,29 @@
+.custom-card-group {
+    column-count: 4;
+}
+
+.custom-card {
+    break-inside: avoid;
+    margin-bottom: 16px;
+}
+
+@media (max-width: 1000px) {
+    .custom-card-group {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 768px) {
+    .custom-card-group {
+        column-count: 1;
+    }
+}
+
+.hover-shadow {
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.hover-shadow:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, .15) !important;
+    transform: translateY(-2px);
+}

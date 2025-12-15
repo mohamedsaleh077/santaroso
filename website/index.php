@@ -11,29 +11,7 @@ $ImageBoardName = $config['const']['name'];
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><?= $ImageBoardName ?></title>
     <link rel="stylesheet" href="./assets/bootstrap4/css/bootstrap.min.css">
-    <style>
-        .custom-card-group {
-            column-count: 3;
-            height: auto;
-        }
-
-        .custom-card {
-            break-inside: avoid;
-            margin-bottom: 16px;
-        }
-
-        @media (max-width: 1000px) {
-            .custom-card-group {
-                column-count: 2;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .custom-card-group {
-                column-count: 1;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="./assets/styles.css">
 </head>
 <body class="bg-danger  bg-gradient">
 <div class="container bg-danger-subtle">
@@ -100,10 +78,15 @@ $ImageBoardName = $config['const']['name'];
         $result = $dbh->Query($query);
         function makeHTMLmedia($filename)
         {
-            $media = $filename;
+            if ($filename === NULL){
+                return '';
+            }
             if ($filename !== '' && (str_ends_with($filename, 'mp4') || str_ends_with($filename, 'mp3'))) {
                 $media = substr($filename, 0, strrpos($filename, '.')) . '.jpg';
+            } else {
+                $media = $filename;
             }
+
             $uploadsBase = '/uploads/';
             $imgSrcThumb = $uploadsBase . 'thumb_' . $media;
             return '<img class="card-img-top" src="' . $imgSrcThumb . '" alt="">';
@@ -111,23 +94,32 @@ $ImageBoardName = $config['const']['name'];
 
         foreach ($result as $thread) {
             $body = substr($thread['body'],0, 100);
-            $board_link = '<a href="/board.php?board_id' .  htmlspecialchars($thread['board_id']) . '" target="_blank">' .  htmlspecialchars($thread['board_name']) . '</a>';
-            echo '<a href="/thread.php?id=' . htmlspecialchars($thread['id']) . '" class="text-reset text-decoration-none">';
-            echo '<div class="card m-2 hover-shadow custom-card">';
-            echo makeHTMLmedia(htmlspecialchars($thread['media']));
-            echo '<div class="card-body">';
-            echo '<h5 class="card-title">' . htmlspecialchars($thread['user_name']) . ' on ' . $board_link . ' board</h5>';
-            echo '<p class="card-text">' . htmlspecialchars($body) . '</p>';
-            echo '</div>';
-            echo '<div class="card-footer">';
-            echo '<small class="text-muted">';
-            echo htmlspecialchars($thread['created_at']) . ' with ' . htmlspecialchars($thread['comment_count']) . ' comments';
-            echo '</small>';
-            echo '</div>';
-            echo '</div>';
-            echo '</a>';
-        }
-        ?>
+            $board_link = '';            ?>
+            <a href="/thread.php?id=<?= htmlspecialchars($thread['id']) ?>">
+                <div class="card m-2 hover-shadow custom-card">
+                        <?= makeHTMLmedia($thread['media']); ?>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="/thread.php?id=<?= htmlspecialchars($thread['id']) ?>" class="stretched-link text-reset text-decoration-none">
+                                <?= htmlspecialchars($thread['user_name']) ?>
+                            </a> on
+                            <a href="/board.php?board_id=<?= htmlspecialchars($thread['board_id']) ?>" target="_blank">
+                                <?= htmlspecialchars($thread['board_name']) ?>
+                            </a>
+                            board
+                        </h5>
+                        <p class="card-text">
+                            <?= htmlspecialchars($body) ?>
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">
+                            <?= htmlspecialchars($thread['created_at']) ?> with <?= htmlspecialchars($thread['comment_count']) ?> comments
+                        </small>
+                    </div>
+                </div>
+            </a>
+        <?php } ?>
     </div>
 
 

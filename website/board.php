@@ -32,30 +32,8 @@ $CaptchaClientToken = $config['tokens']['ClientCaptcha'];
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="./assets/bootstrap4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/styles.css">
     <title><?= htmlspecialchars($result[0]['name']) ?></title>
-
-    <style>
-        .custom-card-group {
-            column-count: 4;
-        }
-
-        .custom-card {
-            break-inside: avoid;
-            margin-bottom: 16px;
-        }
-
-        @media (max-width: 1000px) {
-            .custom-card-group {
-                column-count: 2;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .custom-card-group {
-                column-count: 1;
-            }
-        }
-    </style>
 </head>
 <body class="bg-info mb-0 pb-0">
 <div class="container bg-info-subtle mb-0 pb-0">
@@ -111,16 +89,6 @@ $CaptchaClientToken = $config['tokens']['ClientCaptcha'];
     <div id="feed" class="custom-card-group g-4 p-3"></div>
     <div id="more" class="my-3 text-center text-muted mb-0 pb-0"></div>
 </div>
-<style>
-    .hover-shadow {
-        transition: box-shadow 0.2s ease, transform 0.2s ease;
-    }
-
-    .hover-shadow:hover {
-        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, .15) !important;
-        transform: translateY(-2px);
-    }
-</style>
 
 <script src="./assets/jquery-3.7.1.min.js.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" crossorigin="anonymous"></script>
