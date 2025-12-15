@@ -43,7 +43,7 @@ if (empty($recaptchaResponse)) {
     $validator->setError('captcha', 'Please complete the reCAPTCHA challenge.');
 } else {
     $config = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/config.ini', true);
-    $captchaSecret = $config['tokens']['captcha'] ?? '';
+    $captchaSecret = $config['tokens']['SideServerCaptcha'] ?? '';
     if (empty($captchaSecret)) {
         $validator->setError('captcha', 'reCAPTCHA configuration error. Please contact the administrator.');
     } else {
@@ -151,6 +151,13 @@ try {
 
     // Mark the time of this successful action for rate limiting
     $session->lastRequest();
+
+    $newid = $pdo->lastInsertId();
+    $parms = [
+        ':ref_id' => $newid,
+        ':ip' => $_SERVER['REMOTE_ADDR']
+    ];
+    $dbh->Query('INSERT INTO users_ips_actions (ref_id ,item_type_id, ip) VALUES (:ref_id, "comment", :ip)', $parms);
 
     header('Location: /thread.php?id=' . urlencode($threadId));
     exit;

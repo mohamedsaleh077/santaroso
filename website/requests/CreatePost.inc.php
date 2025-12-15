@@ -44,7 +44,7 @@ if (empty($recaptchaResponse)) {
     $errorHandler->setError('captcha', 'Please complete the reCAPTCHA challenge.');
 } else {
     $config = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/config.ini', true);
-    $captchaSecret = $config['tokens']['captcha'] ?? '';
+    $captchaSecret = $config['tokens']['SideServerCaptcha'] ?? '';
 
     if (empty($captchaSecret)) {
         // If secret key is not configured, treat as failure for security
@@ -137,6 +137,15 @@ $params = [
     ':media' => $mediaFile
 ];
 $res = $dbh->Query($query, $params);
+
+$pdo = $dbh->getConnection();
+$newid = $pdo->lastInsertId();
+$parms = [
+    ':ref_id' => $newid,
+    ':ip' => $_SERVER['REMOTE_ADDR']
+];
+$dbh->Query('INSERT INTO users_ips_actions (ref_id ,item_type_id, ip) VALUES (:ref_id, "thread", :ip)', $parms);
+
 if ($res === false) {
     $errorHandler->setError('database', 'Failed to create the thread. Please try again.');
     $session->setSession("errors", $errorHandler->getErrors());
