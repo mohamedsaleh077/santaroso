@@ -95,6 +95,7 @@
         $result = $dbh->Query($query);
         function makeHTMLmedia($filename)
         {
+            $media = $filename;
             if ($filename !== '' && (str_ends_with($filename, 'mp4') || str_ends_with($filename, 'mp3'))) {
                 $media = substr($filename, 0, strrpos($filename, '.')) . '.jpg';
             }
