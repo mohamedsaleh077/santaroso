@@ -11,6 +11,9 @@ if (!isset($_GET['id'])) {
 }
 
 $id = $_GET['id'];
+
+$config = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/config.ini', true);
+$CaptchaClientToken = $config['tokens']['ClientCaptcha'];
 ?>
 
 <!doctype html>
@@ -128,7 +131,7 @@ $id = $_GET['id'];
     function onloadCallback() {
         if (window.grecaptcha && document.getElementById('recaptcha')) {
             window.grecaptcha.render('recaptcha', {
-                sitekey: '6Lf1iCssAAAAAPpcdDZTp9DYksfKv0JMWpRF2qk8',
+                sitekey: '<?= $CaptchaClientToken ?>',
                 callback: onCaptchaSolved,
                 'expired-callback': onCaptchaExpired
             });

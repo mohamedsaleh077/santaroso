@@ -87,4 +87,4 @@ CREATE TABLE IF NOT EXISTS visit_logger
     PRIMARY KEY (id)
 );
 
-INSERT INTO boards (name, description) VALUES ('test', 'test board');
+-- INSERT INTO boards (name, description) VALUES ('test', 'test board');
