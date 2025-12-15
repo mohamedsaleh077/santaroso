@@ -55,12 +55,14 @@ function createCardHTML(post){
     const meta = date ? `${escapeHtml(date)} - ${commentsLabel}` : commentsLabel;
     return `
     <a href="/thread.php?id=${encodeURIComponent(threadId)}" class="text-reset text-decoration-none">
-      <div class="card mb-4 hover-shadow h-100">
+      <div class="card m-2 hover-shadow custom-card">
         ${mediaHtml}
         <div class="card-body">
           <h5 class="card-title mb-2">${escapeHtml(name)}</h5>
           <p class="card-text">${bodySnippet}</p>
-          <p class="card-text"><small class="text-muted">${meta}</small></p>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted">${meta}</small>
         </div>
       </div>
     </a>`;
@@ -69,7 +71,7 @@ function createCardHTML(post){
 async function loadPosts(keyword, page) {
     if (isLoading || loadmore === 0) return;
     isLoading = true;
-    if (more) more.innerHTML = '<p>Loading...</p>';
+    if (more) more.innerHTML = '<p class="mb-0 pb-0">Loading...</p>';
     const data = await get_posts(keyword, page);
     const posts = Array.isArray(data) ? data : (data && Array.isArray(data.posts) ? data.posts : []);
     if (posts.length !== 0) {
@@ -80,7 +82,7 @@ async function loadPosts(keyword, page) {
         if (feed) feed.insertAdjacentHTML('beforeend', html);
         if (more) more.innerHTML = '';
     } else {
-        if (more) more.innerHTML = `<p>No more threads.</p>`;
+        if (more) more.innerHTML = `<p class="mb-0 pb-0">No more threads.</p>`;
         loadmore = 0;
     }
     isLoading = false;

@@ -29,55 +29,99 @@ $count = $dbh->Query("SELECT COUNT(*) AS num FROM threads WHERE board_id = :id",
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="./assets/bootstrap4/css/bootstrap.min.css">
     <title><?= htmlspecialchars($result[0]['name']) ?></title>
-</head>
-<body>
-<div class="container">
-    <h1><a href="./index.php">SANTAROSO PROJECT 2026</a></h1>
-    <h1>Welcome to <?= htmlspecialchars($result[0]['name']) ?> board</h1>
-    <h6><?= htmlspecialchars($result[0]['description']) ?></h6>
-    <h3>Make a thread lol and join our open <?= $count[0]['num'] ?> thread!</h3>
-    <form action="./requests/CreatePost.inc.php" method="post" enctype="multipart/form-data" class="row g-3">
-        <input type="hidden" name="token" id="token" value="<?php echo $_SESSION['CSRF_TOKEN']; ?>">
-        <input type="hidden" name="board_id" value="<?= htmlspecialchars($id) ?>">
-        <div class="mb-3 col-12">
-            <label for="exampleFormControlInput1" class="form-label">your name</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Default: Anonymous"
-                   maxlength="255" name="name">
-        </div>
-        <div class="mb-3 col-12">
-            <label for="exampleFormControlTextarea1" class="form-label">Post Body</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" maxlength="5000"
-                      name="body"></textarea>
-        </div>
-        <div class="mb-3 col-12">
-            <label for="formFile" class="form-label">attach media</label>
-            <input class="form-control" type="file" id="formFile" name="file">
-        </div>
-        <div id="passwordHelpBlock" class="form-text col-12">
-            Your name must be 2-255 characters long, and your post must be 5000 characters or less. you can upload up to
-            10MB
-            file, JPEG/PNG/GIF/MP4/MP3 are allowed!
-        </div>
-        <div id="recaptcha" class="g-recaptcha col-12" data-sitekey="6Lf1iCssAAAAAPpcdDZTp9DYksfKv0JMWpRF2qk8"></div>
-        <div class="mb-3 col-auto d-flex align-items-end align-items-center">
-            <input type="submit" class="btn btn-secondary mb-0" value="POST" style="display: none" id="submit" disabled>
-            <span id="time-remaining" class="text-muted ml-2" style="display:inline-block"></span>
-        </div>
-        <?php
-        show_errors($session->getSession("errors") ?? []);
-        $session->unsetSession("errors");
-        ?>
-    </form>
-    <hr>
 
-<h3>Threads</h3>
-<div id="feed" class="card-columns"></div>
-<div id="more" class="my-3 text-center text-muted"></div>
+    <style>
+        .custom-card-group {
+            column-count: 4;
+        }
+
+        .custom-card {
+
+            break-inside: avoid;
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 1000px) {
+            .custom-card-group {
+                column-count: 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .custom-card-group {
+                column-count: 1;
+            }
+        }
+    </style>
+</head>
+<body class="bg-info mb-0 pb-0">
+<div class="container bg-info-subtle mb-0 pb-0">
+    <h1 class="text-xl-center p-5"><a href="./index.php">SANTAROSO PROJECT 2026</a></h1>
+    <h2>Welcome to <strong><?= htmlspecialchars($result[0]['name']) ?></strong> board</h2>
+    <h4>Make a thread lol and join our open <strong><?= $count[0]['num'] ?></strong> thread!</h4>
+    <p><?= htmlspecialchars($result[0]['description']) ?></p>
+    <button class="btn btn-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+            aria-expanded="false" aria-controls="collapseExample">
+        Make a thread
+    </button>
+    <div class="collapse bg-body-secondary p-5" id="collapseExample">
+        <form action="./requests/CreatePost.inc.php" method="post" enctype="multipart/form-data"
+              class="row g-3">
+            <input type="hidden" name="token" id="token" value="<?php echo $_SESSION['CSRF_TOKEN']; ?>">
+            <input type="hidden" name="board_id" value="<?= htmlspecialchars($id) ?>">
+            <div class="mb-3 col-12">
+                <label for="exampleFormControlInput1" class="form-label">your name</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Default: Anonymous"
+                       maxlength="255" name="name">
+            </div>
+            <div class="mb-3 col-12">
+                <label for="exampleFormControlTextarea1" class="form-label">Post Body</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" maxlength="5000"
+                          name="body"></textarea>
+            </div>
+            <div class="mb-3 col-12">
+                <label for="formFile" class="form-label">attach media</label>
+                <input class="form-control" type="file" id="formFile" name="file">
+            </div>
+            <div id="passwordHelpBlock" class="form-text col-12">
+                Your name must be 2-255 characters long, and your post must be 5000 characters or less. you can upload
+                up to
+                10MB
+                file, JPEG/PNG/GIF/MP4/MP3 are allowed!
+            </div>
+            <div id="recaptcha" class="g-recaptcha col-12"
+                 data-sitekey="6Lf1iCssAAAAAPpcdDZTp9DYksfKv0JMWpRF2qk8"></div>
+            <div class="mb-3 col-auto d-flex align-items-end align-items-center">
+                <input type="submit" class="btn btn-secondary mb-0" value="POST" style="display: none" id="submit"
+                       disabled>
+                <span id="time-remaining" class="text-muted ml-2" style="display:inline-block"></span>
+            </div>
+            <?php
+            show_errors($session->getSession("errors") ?? []);
+            $session->unsetSession("errors");
+            ?>
+        </form>
+    </div>
+    <hr>
+    <h3>Threads</h3>
+    <br>
+    <div id="feed" class="custom-card-group g-4 p-3"></div>
+    <div id="more" class="my-3 text-center text-muted mb-0 pb-0"></div>
 </div>
 <style>
-  .hover-shadow { transition: box-shadow 0.2s ease, transform 0.2s ease; }
-  .hover-shadow:hover { box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15)!important; transform: translateY(-2px); }
+    .hover-shadow {
+        transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .hover-shadow:hover {
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, .15) !important;
+        transform: translateY(-2px);
+    }
 </style>
+
+<script src="./assets/jquery-3.7.1.min.js.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="./assets/bootstrap4/js/bootstrap.min.js"crossorigin="anonymous"></script>
 <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
 <script src="assets/getThreads.js"></script>
 <script>

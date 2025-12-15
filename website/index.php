@@ -8,7 +8,7 @@
     <title>SANTAROSO</title>
     <link rel="stylesheet" href="./assets/bootstrap4/css/bootstrap.min.css">
 </head>
-<body>
+<body class="bg-danger-subtle  bg-gradient">
 <div class="container">
     <h1>SANTAROSO-PROJECT 2026</h1>
     <p><a href="https://github.com/mohamedsaleh077/santaroso" target="_blank">GitHub</a></p>
@@ -22,17 +22,17 @@
     </ul>
     <h3>OUR BOARDS!</h3>
     <ul>
-    <?php
-        include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/autoload.php';
-        use Objects\Dbh;
+        <?php
+            include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/autoload.php';
+            use Objects\Dbh;
 
-        $query = "SELECT id, name, description FROM boards";
-        $dbh = Dbh::getInstance();
-        $result = $dbh->Query($query);
-        foreach ($result as $board) {
-            echo "<li><a href='/board.php?board_id=" . htmlspecialchars($board['id']) . "'>" . htmlspecialchars($board['name']) . "</a> : " . htmlspecialchars($board['description']) ."</li>";
-        }
-    ?>
+            $query = "SELECT id, name, description FROM boards";
+            $dbh = Dbh::getInstance();
+            $result = $dbh->Query($query);
+            foreach ($result as $board) {
+                echo "<li><a href='/board.php?board_id=" . htmlspecialchars($board['id']) . "'>" . htmlspecialchars($board['name']) . "</a> : " . htmlspecialchars($board['description']) ."</li>";
+            }
+        ?>
     </ul>
 </div>
 </body>

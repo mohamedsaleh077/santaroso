@@ -39,7 +39,7 @@ I may do this in another project lmao
 - HTML
 - CSS
 - Java Script
-- BootStrap
+- BootStrap 5.3
 - PHP
 - MySQL
 - OOP
