@@ -33,6 +33,7 @@ $CaptchaClientToken = $config['tokens']['ClientCaptcha'];
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="./assets/bootstrap4/css/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/styles.css">
+
     <title><?= htmlspecialchars($result[0]['name']) ?></title>
 </head>
 <body class="bg-info mb-0 pb-0">

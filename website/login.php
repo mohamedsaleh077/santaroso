@@ -1,8 +1,4 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_startup_errors', 1);
-ini_set('display_errors', '1');
-
 include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/autoload.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/show_errors.php';
 use Objects\Session;
@@ -12,6 +8,9 @@ if ($session->getSession("adminLogin")){
     header("Location: /admin.php");
     die();
 }
+$config = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/config.ini', true);
+$ImageBoardName = $config['const']['name'];
+$CaptchaClientToken = $config['tokens']['ClientCaptcha'];
 ?>
 <!doctype html>
 <html lang="en">
@@ -24,8 +23,8 @@ if ($session->getSession("adminLogin")){
     <link rel="stylesheet" href="./assets/bootstrap4/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container bg-info  mt-2 text-light">
-    <h1>SANTAROSO PROJECT</h1>
+<div class="container bg-info  mt-2 text-light p-5">
+    <h1><?= $ImageBoardName ?></h1>
     <h3>Log in</h3>
     <form action="./requests/AdminLogin.inc.php" method="post" class="row g-3">
         <input type="hidden" name="token" id="token" value="<?php echo $_SESSION['CSRF_TOKEN']; ?>">
@@ -53,7 +52,7 @@ if ($session->getSession("adminLogin")){
     function onloadCallback() {
         if (window.grecaptcha && document.getElementById('recaptcha')) {
             window.grecaptcha.render('recaptcha', {
-                sitekey: '6Lf1iCssAAAAAPpcdDZTp9DYksfKv0JMWpRF2qk8'
+                sitekey: '<?= $CaptchaClientToken ?>'
             });
         }
         thing.style.display = "block";

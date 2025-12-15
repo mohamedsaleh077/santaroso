@@ -1,6 +1,25 @@
 <?php
+include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/autoload.php';
+use Objects\Dbh;
+use Objects\Session;
+
 $config = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/config.ini', true);
 $ImageBoardName = $config['const']['name'];
+
+$counter_file = 'hit.txt';
+
+if (!file_exists($counter_file)) {
+    file_put_contents($counter_file, 0);
+}
+
+$count = (int)file_get_contents($counter_file);
+$session = new Session();
+
+if (!isset($_SESSION['hasVisited'])) {
+    $count++;
+    file_put_contents($counter_file, $count);
+    $session->setSession('hasVisited', true);
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -17,6 +36,7 @@ $ImageBoardName = $config['const']['name'];
 <div class="container bg-danger-subtle">
     <h1 class="pb-3 pt-3 text-xl-center"><?= $ImageBoardName ?></h1>
     <p>Lightweight Image Board, not useful and just a dump place to post dump things anonymously lmao</p>
+    <p>we have <?= $count ?> visitor!</p>
     <h3>RULES, YOU MUST FOLLOW IT OR I WILL KICK YOUR IP LMAO</h3>
     <ul>
         <li>No NSFW</li>
@@ -35,10 +55,6 @@ $ImageBoardName = $config['const']['name'];
         </thead>
         <tbody>
         <?php
-        include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/autoload.php';
-
-        use Objects\Dbh;
-
         $query = "SELECT id, name, description FROM boards";
         $dbh = Dbh::getInstance();
         $result = $dbh->Query($query);

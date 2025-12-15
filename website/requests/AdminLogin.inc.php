@@ -25,9 +25,9 @@ $csrfToken = $_POST['token'];
 $values = array($username, $password);
 
 // CSRF validation
-$errorHandler->CSRF($csrfToken, $_SESSION['CSRF_TOKEN'] ?? '');
+$errorHandler->CSRF($csrfToken, $session->getCsrfToken());
 $errorHandler->emptyCheck($values);
-$errorHandler->maxOneLine($values);
+$errorHandler->maxOneLine($values, 255);
 
 // Server-side Google reCAPTCHA v2 verification
 $recaptchaResponse = $_POST['g-recaptcha-response'] ?? '';
@@ -35,7 +35,7 @@ if (empty($recaptchaResponse)) {
     $errorHandler->setError('captcha', 'Please complete the reCAPTCHA challenge.');
 } else {
     $config = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/config.ini', true);
-    $captchaSecret = $config['tokens']['captcha'] ?? '';
+    $captchaSecret = $config['tokens']['SideServerCaptcha'] ?? '';
 
     if (empty($captchaSecret)) {
         // If secret key is not configured, treat as failure for security
@@ -92,6 +92,6 @@ if ($errorHandler->getErrors()){
     header("Location: /login.php");
     die();
 }
-$session->setSession("adminLogin", $result[0]['user_name']);
+$session->setSession("adminLogin", $result[0]['id']);
 header("Location: /admin.php");
 die();

@@ -16,7 +16,10 @@ CREATE TABLE IF NOT EXISTS threads
     user_name  VARCHAR(255)           NOT NULL,
     board_id   INT(11)                NOT NULL,
 
-    title      VARCHAR(255)           NOT NULL,
+    title      VARCHAR(255)         NULL,
+    -- I mistaken in something, so... when I used vibe coding in this part, Ai try to deal with it while it shouldnt exists
+    -- so this is here for some stupid reasons blah blah blah
+
     body       TEXT         DEFAULT NULL,
 
     media      VARCHAR(255) DEFAULT NULL,
