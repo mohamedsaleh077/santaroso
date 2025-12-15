@@ -2,3 +2,4 @@ docker/docker
 docker/data
 website/uploads/*
 .idea
+./config.ini
