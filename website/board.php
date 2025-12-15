@@ -55,7 +55,7 @@ $count = $dbh->Query("SELECT COUNT(*) AS num FROM threads WHERE board_id = :id",
 </head>
 <body class="bg-info mb-0 pb-0">
 <div class="container bg-info-subtle mb-0 pb-0">
-    <h1 class="p-5 text-xl-center"><a href="./index.php">サンタローソ・プロジェクト <br> Santarōso Purojekuto</a></h1>
+    <h1 class="pb-3 pt-3 text-xl-center"><a href="./index.php">サンタローソ・プロジェクト <br> Santarōso Purojekuto</a></h1>
     <h2>Welcome to <strong><?= htmlspecialchars($result[0]['name']) ?></strong> board</h2>
     <h4>Make a thread lol and join our open <strong><?= $count[0]['num'] ?></strong> thread!</h4>
     <p><?= htmlspecialchars($result[0]['description']) ?></p>

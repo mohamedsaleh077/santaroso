@@ -33,7 +33,7 @@
 </head>
 <body class="bg-danger  bg-gradient">
 <div class="container bg-danger-subtle">
-    <h1 class="p-5 text-xl-center">サンタローソ・プロジェクト <br> Santarōso Purojekuto</h1>
+    <h1 class="pb-3 pt-3 text-xl-center">サンタローソ・プロジェクト <br> Santarōso Purojekuto</h1>
     <p>Lightweight Image Board, not useful and just a dump place to post dump things anonymously lmao</p>
     <h3>RULES, YOU MUST FOLLOW IT OR I WILL KICK YOUR IP LMAO</h3>
     <ul>

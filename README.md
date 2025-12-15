@@ -14,13 +14,14 @@ INSERT INTO boards (name, description) VALUES ('test', 'test board');
 - threads and comemnts counter.
 - uploading Images/Videos/Audio up to 10MB and generating thumbinals.
 - ready to deploy anywhere, just make your own config,ini ez!
+- top 9 threads in the home page.
 
 ## Future Plans
 - add Admin panel.
 - admin will make boards, delete content and ban IPs.
 - logs for everything is going to help troubleshoting and detect unusal behaviors.
 - add more customization options for UI.
-- add popular threads.
+- ~~add popular threads.~~
 - add Archiving threads.
 - add lock for threads.
 - report system.
