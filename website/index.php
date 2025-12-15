@@ -110,7 +110,7 @@
             echo '<div class="card m-2 hover-shadow custom-card">';
             echo makeHTMLmedia(htmlspecialchars($thread['media']));
             echo '<div class="card-body">';
-            echo '<h5 class="card-title">' . htmlspecialchars($thread['user_name']) . '</h5>';
+            echo '<h5 class="card-title">' . htmlspecialchars($thread['user_name']) . 'on ' . htmlspecialchars($thread['board_name']) . 'board</h5>';
             echo '<p class="card-text">' . htmlspecialchars($body) . '</p>';
             echo '</div>';
             echo '<div class="card-footer">';
