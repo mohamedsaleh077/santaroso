@@ -29,8 +29,8 @@ $body = $_POST['body'] ?? '';
 $errorHandler->CSRF($csrfToken, $_SESSION['CSRF_TOKEN'] ?? '');
 $errorHandler->emptyCheck([$boardId]);
 // Optional fields but keep length constraints if provided
-$errorHandler->max255([$name]);
-$errorHandler->max5000([$body]);
+$errorHandler->maxOneLine([$name], 50);
+$errorHandler->maxParagraphe(['post_body' => $body], 5000);
 
 // Rate limit: allow only one action every 60 seconds per session
 if ($session->isLastRequestWithinTimeframe()) {

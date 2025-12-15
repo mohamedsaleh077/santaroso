@@ -34,7 +34,22 @@ try {
     $dbh = Dbh::getInstance()->getConnection();
 
     // Fetch thread
-    $stmt = $dbh->prepare("SELECT id, user_name, board_id, title, body, media, created_at FROM threads WHERE id = :id");
+    $query = "
+        SELECT
+            threads.user_name,
+            boards.name AS board_name,
+            threads.body,
+            threads.media,
+            threads.created_at,
+            boards.id as b_id
+        FROM
+            threads
+        INNER JOIN
+            boards ON boards.id = threads.board_id
+        WHERE
+            threads.id = :id
+    ";
+    $stmt = $dbh->prepare($query);
     $stmt->execute([':id' => $threadId]);
     $thread = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -63,7 +78,8 @@ try {
     $threadOut = [
         'id' => (int)$thread['id'],
         'name' => $thread['user_name'],
-        'board_id' => (int)$thread['board_id'],
+        'board_id' => (int)$thread['b_id'],
+        'board_name' => $thread['board_name'],
         'title' => $thread['title'],
         'body' => $thread['body'],
         'media' => $thread['media'],

@@ -28,8 +28,8 @@ $body = $_POST['body'] ?? '';
 // Basic validations
 $validator->CSRF($csrfToken, $_SESSION['CSRF_TOKEN'] ?? '');
 $validator->emptyCheck([$threadId]);
-$validator->max255([$name]);
-$validator->max5000([$body]);
+$validator->maxOneLine([$name], 50);
+$validator->maxParagraphe([$body], 5000);
 
 // Rate limit: allow only one action every 60 seconds per session
 if ($session->isLastRequestWithinTimeframe()) {

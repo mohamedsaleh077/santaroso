@@ -36,7 +36,6 @@ $count = $dbh->Query("SELECT COUNT(*) AS num FROM threads WHERE board_id = :id",
         }
 
         .custom-card {
-
             break-inside: avoid;
             margin-bottom: 16px;
         }
@@ -56,7 +55,7 @@ $count = $dbh->Query("SELECT COUNT(*) AS num FROM threads WHERE board_id = :id",
 </head>
 <body class="bg-info mb-0 pb-0">
 <div class="container bg-info-subtle mb-0 pb-0">
-    <h1 class="text-xl-center p-5"><a href="./index.php">SANTAROSO PROJECT 2026</a></h1>
+    <h1 class="p-5 text-xl-center"><a href="./index.php">サンタローソ・プロジェクト <br> Santarōso Purojekuto</a></h1>
     <h2>Welcome to <strong><?= htmlspecialchars($result[0]['name']) ?></strong> board</h2>
     <h4>Make a thread lol and join our open <strong><?= $count[0]['num'] ?></strong> thread!</h4>
     <p><?= htmlspecialchars($result[0]['description']) ?></p>
@@ -72,11 +71,11 @@ $count = $dbh->Query("SELECT COUNT(*) AS num FROM threads WHERE board_id = :id",
             <div class="mb-3 col-12">
                 <label for="exampleFormControlInput1" class="form-label">your name</label>
                 <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Default: Anonymous"
-                       maxlength="255" name="name">
+                       maxlength="49" name="name">
             </div>
             <div class="mb-3 col-12">
                 <label for="exampleFormControlTextarea1" class="form-label">Post Body</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" maxlength="5000"
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" maxlength="4999"
                           name="body"></textarea>
             </div>
             <div class="mb-3 col-12">
@@ -96,12 +95,12 @@ $count = $dbh->Query("SELECT COUNT(*) AS num FROM threads WHERE board_id = :id",
                        disabled>
                 <span id="time-remaining" class="text-muted ml-2" style="display:inline-block"></span>
             </div>
-            <?php
-            show_errors($session->getSession("errors") ?? []);
-            $session->unsetSession("errors");
-            ?>
         </form>
     </div>
+    <?php
+    show_errors($session->getSession("errors") ?? []);
+    $session->unsetSession("errors");
+    ?>
     <hr>
     <h3>Threads</h3>
     <br>
@@ -119,9 +118,9 @@ $count = $dbh->Query("SELECT COUNT(*) AS num FROM threads WHERE board_id = :id",
     }
 </style>
 
-<script src="./assets/jquery-3.7.1.min.js.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="./assets/jquery-3.7.1.min.js.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" crossorigin="anonymous"></script>
-<script src="./assets/bootstrap4/js/bootstrap.min.js"crossorigin="anonymous"></script>
+<script src="./assets/bootstrap4/js/bootstrap.min.js" crossorigin="anonymous"></script>
 <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
 <script src="assets/getThreads.js"></script>
 <script>

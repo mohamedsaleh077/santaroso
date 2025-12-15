@@ -39,13 +39,21 @@ function renderMedia(container, media){
     const type = getFileType(media);
     const src = `/uploads/${media}`;
     if (type === 'image'){
-        container.innerHTML = `<img src="${src}" class="img-fluid" alt="media">`;
+        container.innerHTML = `
+            <a href="${src}" target="_blank">
+                <img src="${src}" class="img-fluid  m-1 " style="" alt="media">
+            </a>
+        `;
     } else if (type === 'video'){
-        container.innerHTML = `<video src="${src}" controls class="w-100"></video>`;
+        container.innerHTML = `<video class="mx-3 " src="${src}" controls ></video>`;
     } else if (type === 'audio'){
         const thumbName = `thumb_${media.replace(/\.[^.]+$/, '')}.jpg`;
         const thumbSrc = `/uploads/${thumbName}`;
-        container.innerHTML = `<img src="${thumbSrc}" class="img-fluid mb-2" alt="audio thumbnail"><audio src="${src}" controls class="w-100"></audio>`;
+        container.innerHTML = `
+            <a href="${thumbSrc}" target="_blank">
+                <img src="${thumbSrc}" class="mx-3  mb-2 img-fluid" alt="audio thumbnail">
+            </a>
+            <audio src="${src}" controls class="mx-3  w-75"></audio>`;
     } else if (type === 'pdf'){
         container.innerHTML = `<a href="${src}" target="_blank" rel="noopener">Open attachment</a>`;
     }
@@ -69,6 +77,7 @@ function renderWithReadMore(text, limit=1000){
     const fullHtml = buildMarkdownHtml(full);
 
     const wrapper = document.createElement('div');
+    wrapper.className = "p-1 card";
     const content = document.createElement('div');
     content.innerHTML = shortHtml;
 
@@ -94,11 +103,9 @@ function renderWithReadMore(text, limit=1000){
 }
 
 function deriveTitleFromContent(thread){
-    const base = (thread && thread.body) ? thread.body : '';
     const name = thread && thread.name ? thread.name : 'Anonymous';
-    const piece = base.trim().slice(0, 60).replace(/\s+/g,' ');
-    if (piece) return piece + (base.length>60?'...':'');
-    return `Thread by ${name}`;
+    const board = thread && thread.board_name;
+    return `Thread by ${name} on ${board} Board!`;
 }
 
 // Main rendering
@@ -121,11 +128,12 @@ function appendComments(comments){
         wrap.className = 'media mb-3';
         const body = document.createElement('div');
         body.className = 'media-body';
-        const h4 = document.createElement('h4');
-        h4.className = 'media-heading';
+        const h4 = document.createElement('p');
+        h4.className = 'media-heading p-0 m-0 fw-bold';
         h4.textContent = c.name || 'Anonymous';
-        const h6 = document.createElement('h6');
-        h6.textContent = c.created_at || '';
+        const h6 = document.createElement('small');
+        h6.className = 'text-muted';
+        h6.textContent = c.created_at || 'idk';
         const content = renderWithReadMore(c.body, 1000);
         body.appendChild(h4);
         body.appendChild(h6);
@@ -133,7 +141,7 @@ function appendComments(comments){
         if (c.media){
             const mediaDiv = document.createElement('div');
             renderMedia(mediaDiv, c.media);
-            mediaDiv.className = 'mt-2';
+            mediaDiv.className = 'mt-2 h-50';
             body.appendChild(mediaDiv);
         }
         wrap.appendChild(body);
@@ -181,6 +189,8 @@ async function init(){
         // Title and meta
         const derived = deriveTitleFromContent(THREAD_DATA);
         if (elTitle) elTitle.textContent = derived;
+        const board_id = THREAD_DATA && THREAD_DATA.board_id;
+        if (elTitle) elTitle.innerHTML += `  <a href="/board.php?board_id=${board_id}">vist</a>`;
         document.title = derived;
         if (elDate) elDate.textContent = THREAD_DATA.created_at || '';
         // Media

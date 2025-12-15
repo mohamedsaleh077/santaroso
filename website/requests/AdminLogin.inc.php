@@ -27,7 +27,7 @@ $values = array($username, $password);
 // CSRF validation
 $errorHandler->CSRF($csrfToken, $_SESSION['CSRF_TOKEN'] ?? '');
 $errorHandler->emptyCheck($values);
-$errorHandler->max255($values);
+$errorHandler->maxOneLine($values);
 
 // Server-side Google reCAPTCHA v2 verification
 $recaptchaResponse = $_POST['g-recaptcha-response'] ?? '';

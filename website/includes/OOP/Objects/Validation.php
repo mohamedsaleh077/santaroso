@@ -21,20 +21,21 @@ class Validation
         }
     }
 
-    public function max255(array $values)
+    public function maxOneLine(array $values, int $max)
     {
         foreach ($values as $key => $value) {
-            if (mb_strlen($value) > 255) {
-                $this->errors["max255_" . $key] = "Please keep your message under 255 characters.";
+            if (mb_strlen($value) >= $max) {
+                $this->errors["max255_" . $max . "_". $key] = "Please keep your message under 255 characters.";
             }
         }
     }
 
-    public function max5000(array $values)
+    public function maxParagraphe(array $values, int $max)
     {
         foreach ($values as $key => $value) {
-            if (mb_strlen($value) > 5000) {
-                $this->errors["max255_" . $key] = "Please keep your message under 5000 characters.";
+            $valueToCheck = str_replace("\r\n", "\n", $value);
+            if ($max <= mb_strlen($valueToCheck)) {
+                $this->errors["max_" . $max . "_". $key] = "Please keep your message under 5000 characters.";
             }
         }
     }
