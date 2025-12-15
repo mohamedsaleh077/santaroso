@@ -190,7 +190,7 @@ async function init(){
         const derived = deriveTitleFromContent(THREAD_DATA);
         if (elTitle) elTitle.textContent = derived;
         const board_id = THREAD_DATA && THREAD_DATA.board_id;
-        if (elTitle) elTitle.innerHTML += `  <a href="/board.php?board_id=${board_id}">vist</a>`;
+        if (elTitle) elTitle.innerHTML += `  <a href="/board.php?board_id=${board_id}">visit</a>`;
         document.title = derived;
         if (elDate) elDate.textContent = THREAD_DATA.created_at || '';
         // Media
