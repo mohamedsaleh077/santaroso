@@ -1,8 +1,7 @@
 <?php
-
-use Objects\Dbh;
-
+include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/ipCheck.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/autoload.php';
+use Objects\Dbh;
 
 header('Content-Type: application/json; charset=utf-8');
 

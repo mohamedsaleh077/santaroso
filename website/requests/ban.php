@@ -1,4 +1,5 @@
 <?php
+include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/ipCheck.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 // Ensures the script only processes GET requests

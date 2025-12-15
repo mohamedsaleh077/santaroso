@@ -1,4 +1,5 @@
 <?php
+include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/ipCheck.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/autoload.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/show_errors.php';
 

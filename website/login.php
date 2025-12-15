@@ -1,6 +1,8 @@
 <?php
 include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/autoload.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/show_errors.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/ipCheck.php';
+
 use Objects\Session;
 
 $session = new Session();

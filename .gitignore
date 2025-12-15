@@ -3,3 +3,4 @@ docker/data
 website/uploads/*
 .idea
 website/config.ini
+./hit.txt

@@ -1,4 +1,6 @@
 <?php
+include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/ipCheck.php';
+
 if (!isset($_GET['board_id'])) {
     die("wth?");
 }
