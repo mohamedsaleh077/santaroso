@@ -89,18 +89,31 @@ $count = (int)file_get_contents($counter_file);
             <?php
             show_errors($session->getSession("errors") ?? []);
             $session->unsetSession("errors");
-
-            if (isset($_GET['done']) && $_GET['done'] == "updateuserpass") { ?>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>Done!</strong> username and password for admin is updated!
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            <?php } ?>
+            ?>
         </div>
         <div class="tab-pane fade" id="pills-boards" role="tabpanel" aria-labelledby="pills-profile-tab">
-            boards management
+            <h3>Manage Boards</h3>
+            <hr>
+            <form action="./requests/newBoard.php" method="post">
+                <input type="hidden" name="token" id="token" value="<?php echo $_SESSION['CSRF_TOKEN']; ?>">
+                <input type="text" class="form-control mb-2" name="name" placeholder="board name" required maxlength="250">
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" maxlength="1000"
+                          name="disp" placeholder="say something about this board"></textarea>
+                <button type="submit" class="btn btn-primary mt-2" style="max-width: 200px">create</button>
+            </form>
+            <hr>
+            <ul>
+            <?php
+                $boards = $pdo->Query("SELECT * FROM boards");
+                foreach ($boards as $board){
+            ?>
+            <li><?= $board['name'] ?> : <?= $board['description'] ?> :
+                <a href="./requests/delBoard.php?id=<?= $board['id'] ?>">Delete</a>
+            </li>
+            <?php
+                }
+            ?>
+            </ul>
         </div>
         <div class="tab-pane fade" id="pills-content" role="tabpanel" aria-labelledby="pills-content">
             conenten management
@@ -109,6 +122,29 @@ $count = (int)file_get_contents($counter_file);
             report report
         </div>
     </div>
+
+    <?php if (isset($_GET['done']) && $_GET['done'] == "updateuserpass") { ?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Done!</strong> username and password for admin is updated!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <?php } else if (isset($_GET['done']) && $_GET['done'] == "delBoard") { ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Done!</strong> board is deleted!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <?php } else if (isset($_GET['done']) && $_GET['done'] == "newboardcreated") { ?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Done!</strong> board is Created!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <?php } ?>
 </div>
 
 <script src="./assets/jquery-3.7.1.min.js.js"></script>

@@ -4,7 +4,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST'){
     die("Invalid request method");
 }
 
-if (!isset($_POST['user']) || !isset($_POST['pwd']) || !isset($_POST['token'])){
+if (!isset($_POST['name']) || !isset($_POST['disp']) || !isset($_POST['token'])){
     die("Missing all required values");
 }
 
@@ -25,14 +25,15 @@ $errorHandler = new Validation();
 $dbh = Dbh::getInstance();
 
 $id = $session->getSession("adminLogin");
-$username = $_POST['user'];
-$password = $_POST['pwd'];
+$name = $_POST['name'];
+$disc = $_POST['disp'];
 $csrfToken = $_POST['token'];
-$values = array($username, $password);
+$values = array($name, $disc);
 
 $errorHandler->CSRF($csrfToken, $session->getCsrfToken());
 $errorHandler->emptyCheck($values);
-$errorHandler->maxOneLine($values, 255);
+$errorHandler->maxOneLine([$name], 255);
+$errorHandler->emptyCheck([$disc], 1000);
 
 if ($errorHandler->getErrors()){
     $session->setSession("errors", $errorHandler->getErrors());
@@ -41,12 +42,12 @@ if ($errorHandler->getErrors()){
 }
 
 try{
-    $result = $dbh->query("UPDATE admins SET admins.password = :pwd , admins.user_name = :user  WHERE id = :id;",
-        [":pwd" => $password, ":user" => $username, ":id" => $id]);
+    $result = $dbh->query("INSERT INTO boards (name, description) VALUES (:name, :disc);",
+        [":name" => $name, ":disc" => $disc]);
 } catch (PDOException $e){
     error_log("errors", $e->getMessage());
     die("Database error");
 }
 
-header("Location: /admin.php?done=updateuserpass");
+header("Location: /admin.php?done=newboardcreated");
 die();
