@@ -41,19 +41,19 @@ function renderMedia(container, media){
     if (type === 'image'){
         container.innerHTML = `
             <a href="${src}" target="_blank">
-                <img src="${src}" class="img-fluid  m-1 " style="" alt="media">
+                <img src="${src}" class="img-fluid mb-1" style="max-height: 300px" alt="media">
             </a>
         `;
     } else if (type === 'video'){
-        container.innerHTML = `<video class="mx-3 " src="${src}" controls ></video>`;
+        container.innerHTML = `<video class="w-100" src="${src}" controls style="max-height: 300px"></video>`;
     } else if (type === 'audio'){
         const thumbName = `thumb_${media.replace(/\.[^.]+$/, '')}.jpg`;
         const thumbSrc = `/uploads/${thumbName}`;
         container.innerHTML = `
             <a href="${thumbSrc}" target="_blank">
-                <img src="${thumbSrc}" class="mx-3  mb-2 img-fluid" alt="audio thumbnail">
+                <img src="${thumbSrc}" class="mb-2 img-fluid" alt="audio thumbnail" style="max-height: 300px">
             </a>
-            <audio src="${src}" controls class="mx-3  w-75"></audio>`;
+            <audio src="${src}" controls class="mx-3 w-75"></audio>`;
     } else if (type === 'pdf'){
         container.innerHTML = `<a href="${src}" target="_blank" rel="noopener">Open attachment</a>`;
     }
