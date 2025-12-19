@@ -81,14 +81,10 @@ the project works fine with PHP 8.3.26, MySQL 8.3.26 and Apache 2.4.65.
 ### setting up docker
 - install docker, docker-compose and docker-desktop
 - run docker desktop
-- run these commands
-```bash
-    cd ./docker
-    docker compose up --build
-```
+- run `docker compose up --build -d`
 
 ### to access the project (docker)
-- for the website: https://localhost
+- for the website: https://localhost:8000
 - for phpmyadmin: https://localhost:8081
 - for database: `db:3306` and dbname is `santaroso`
 - database users: `root:root`, `user:password` yes seriously!
